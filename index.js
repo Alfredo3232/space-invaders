@@ -7,8 +7,8 @@ var server = http.Server(app);
 
 app.use(express.static('game'));
 
-server.listen(PORT, function() {
-  console.log('server running');
+server.listen(PORT, function () {
+    console.log('server running');
 });
 
 console.log(`the server is running on ${PORT}`)
