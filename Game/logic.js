@@ -6,11 +6,6 @@ canvas.height = innerHeight;
 
 class Player {
     constructor() {
-        this.position = {
-            x: canvas.width / 2 - this.width / 2,
-            y: 200
-        }
-
         this.velocity = {
             x: 0,
             y: 0
@@ -23,32 +18,124 @@ class Player {
             this.image = image
             this.width = image.width * scale
             this.height = image.height * scale
+            this.position = {
+                x: canvas.width / 2 - this.width / 2,
+                y: canvas.height - this.height - 20
+            }
         }
     }
 
     draw() {
         // c.fillStyle = 'red'
         // c.fillRect(this.position.x, this.position.y, this.width, this.height)
-        if (this.image) {
-            c.drawImage(
-                this.image,
-                this.position.x,
-                this.position.y,
-                this.width,
-                this.height
-            );
-        }
+        //THIS IS A RED BOX INSTEAD OF THE SPACESHIP
 
+        c.drawImage(
+            this.image,
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height
+        );
+    }
+
+    update() {
+        if (this.image) {
+            this.draw()
+            this.position.x += this.velocity.x
+        }
     }
 }
 
 const player = new Player();
-player.draw()
+const keys = {
+    a: {
+        pressed: false
+    },
+    ArrowLeft: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    },
+    ArrowRight: {
+        pressed: false
+    },
+    space: {
+        pressed: false
+    },
+}
 
 function animate() {
     requestAnimationFrame(animate)
 
-    player.draw()
+    c.fillStyle = 'black'
+    c.fillRect(0, 0, canvas.width, canvas.height)
+
+    player.update()
+
+    if (keys.a.pressed && player.position.x >= 0) {
+        player.velocity.x = -5
+    } else if (keys.ArrowLeft.pressed && player.position.x >= 0) {
+        player.velocity.x = -5
+    }  else if (keys.d.pressed) {
+        player.velocity.x = 5
+    }  else if (keys.ArrowRight.pressed) {
+        player.velocity.x = 5
+    } else {
+        player.velocity.x = 0
+    }
 }
 
 animate()
+
+addEventListener('keydown', ({ key }) => {
+    switch (key) {
+        case 'a':
+            console.log('left')
+            keys.a.pressed = true
+            break
+        case 'ArrowLeft':
+            console.log('ArrowLeft')
+            keys.ArrowLeft.pressed = true
+            break
+        case 'd':
+            console.log('right')
+            keys.d.pressed = true
+            break
+        case 'ArrowRight':
+            console.log('ArrowRight')
+            keys.ArrowRight.pressed = true
+            break
+        case ' ':
+            console.log('Fire!!')
+            keys.space.pressed = true
+            break
+    }
+})
+
+addEventListener('keyup', ({ key }) => {
+    switch (key) {
+        case 'a':
+            console.log('left')
+            keys.a.pressed = false
+            break
+        case 'ArrowLeft':
+            console.log('ArrowLeft')
+            player.velocity.x = -5
+            keys.ArrowLeft.pressed = false
+            break
+        case 'd':
+            console.log('right')
+            keys.d.pressed = false
+            break
+        case 'ArrowRight':
+            console.log('ArrowRight')
+            keys.ArrowRight.pressed = false
+            break
+        case ' ':
+            console.log('Fire!!')
+            keys.space.pressed = false
+            break
+    }
+})
