@@ -105,8 +105,14 @@ function animate() {
 
     player.update()
 
-    projectiles.forEach(projectile => {
-        projectile.update()
+    projectiles.forEach((projectile, index) => {
+        if (projectile.position.y + projectile.radius <= 0) {
+            setTimeout(() => {
+            projectiles.splice(index, 1)
+            }, 0)
+        } else {
+            projectile.update()
+        }
     })
 
     if (keys.a.pressed && player.position.x >= 0) {
