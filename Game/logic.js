@@ -150,7 +150,7 @@ addEventListener('keydown', ({ key }) => {
             keys.ArrowRight.pressed = true
             break
         case ' ':
-            keys.space.pressed = true
+            // keys.space.pressed = true
             projectiles.push(new Projectile({
                 position: {
                     x: player.position.x + player.width / 2,
