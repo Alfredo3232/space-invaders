@@ -108,7 +108,7 @@ function animate() {
     projectiles.forEach((projectile, index) => {
         if (projectile.position.y + projectile.radius <= 0) {
             setTimeout(() => {
-            projectiles.splice(index, 1)
+                projectiles.splice(index, 1)
             }, 0)
         } else {
             projectile.update()
